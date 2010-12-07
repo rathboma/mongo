@@ -66,19 +66,19 @@ namespace mongo {
                 ret << (escape_slash ? "\\/" : "/");
                 break;
             case '\b':
-                ret << "\\b";
+                ret << " ";
                 break;
             case '\f':
-                ret << "\\f";
+                ret << " ";
                 break;
             case '\n':
-                ret << "\\n";
+                ret << " ";
                 break;
             case '\r':
-                ret << "\\r";
+                ret << " ";
                 break;
             case '\t':
-                ret << "\\t";
+                ret << " ";
                 break;
             default:
                 if ( *i >= 0 && *i <= 0x1f ) {
@@ -115,11 +115,13 @@ namespace mongo {
                     number() <= numeric_limits< double >::max() ) {
                 s.precision( 16 );
                 s << number();
+								
             } else {
-                StringBuilder ss;
-                ss << "Number " << number() << " cannot be represented in JSON";
-                string message = ss.str();
-                massert( 10311 ,  message.c_str(), false );
+								s << '"' << "NaN" << '"';
+                //StringBuilder ss;
+                //ss << "Number " << number() << " cannot be represented in JSON";
+                //string message = ss.str();
+                //massert( 10311 ,  message.c_str(), false );
             }
             break;
         case mongo::Bool:

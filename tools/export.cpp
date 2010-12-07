@@ -115,10 +115,14 @@ public:
             if ( csv ){
                 for ( vector<string>::iterator i=_fields.begin(); i != _fields.end(); i++ ){
                     if ( i != _fields.begin() )
-                        out << ",";
+                        out << ", ";
                     const BSONElement & e = obj.getFieldDotted(i->c_str());
                     if ( ! e.eoo() ){
-                        out << e.jsonString( Strict , false );
+												// if(e.type() == NumberDouble && e.number() == numeric_limits<double>::quiet_NaN()){
+												// 	out << '"' << "NaN" << '"';
+												// } else {
+                        	out << e.jsonString( Strict , false );
+//												}
                     }
                 }
                 out << endl;
